@@ -25,11 +25,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 
     implementation("org.mapstruct:mapstruct:1.6.2")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.2")
 
     runtimeOnly("org.postgresql:postgresql:42.7.3")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+    runtimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:junit-jupiter:1.20.2")
