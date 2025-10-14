@@ -1,4 +1,4 @@
-package org.tiradaus.infrastructure.persistence.jpa;
+package org.tiradaus.infrastructure.persistence.jpa.entity;
 
 import jakarta.persistence.*;
 
@@ -18,22 +18,17 @@ public class UserEntity {
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
     @Column(name = "last_name", nullable = false, length = 100)
     private String lastName;
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(name = "password", nullable = false, unique = true, length = 100)
+    @Column(name = "password", nullable = false, length = 100)
     private String password;
 
     @Column(name = "is_active", nullable = false)
-    private boolean active = true;
+    private boolean isActive = true;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
@@ -48,6 +43,16 @@ public class UserEntity {
     @Column(name = "created_at")
     private Instant createdAt;
 
+    @PrePersist
+    void prePersist() {
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        updatedAt = Instant.now();
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getUserName() { return userName; }
@@ -58,10 +63,10 @@ public class UserEntity {
     public void setLastName(String lastName) { this.lastName = lastName; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public String getPasswordHash() { return password; }
-    public void setPasswordHash(String passwordHash) { this.password = passwordHash; }
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public String getPassword() { return password; }
+    public void setPassword(String passwordHash) { this.password = password; }
+    public boolean getIsActive() { return isActive; }
+    public void setIsActive(boolean active) { this.isActive = active; }
     public RoleEntity getRole() { return role; }
     public void setRole(RoleEntity role) { this.role = role; }
     public Instant getLastLogin() { return lastLogin; }

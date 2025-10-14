@@ -38,7 +38,7 @@ public class User {
     public String getLastName() { return lastName; }
     public String getEmail() { return email; }
     public String getPassword() { return password; }
-    public boolean isActive() { return isActive; }
+    public boolean getIsActive() { return isActive; }
     public Role getRole() { return role; }
     public Instant getLastLogin() { return lastLogin; }
     public Instant getCreatedAt() { return createdAt; }

@@ -1,4 +1,4 @@
-package org.tiradaus.infrastructure.persistence.jpa;
+package org.tiradaus.infrastructure.persistence.jpa.entity;
 
 import jakarta.persistence.*;
 

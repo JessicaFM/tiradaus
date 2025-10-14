@@ -12,7 +12,7 @@ java {
     }
 }
 
-group = "org.example"
+group = "org.tiradau"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -24,10 +24,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.micrometer:micrometer-registry-prometheus")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-
     implementation("org.mapstruct:mapstruct:1.6.2")
+    implementation("org.postgresql:postgresql")
+
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.2")
 
     runtimeOnly("org.postgresql:postgresql:42.7.3")
