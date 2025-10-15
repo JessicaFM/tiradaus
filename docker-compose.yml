@@ -19,7 +19,7 @@ services:
     networks:
       - mynetwork
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d codexlibris"]
+      test: ["CMD-SHELL", "pg_isready -U admin -d tiradaus"]
       interval: 10s
       retries: 5
       start_period: 10s

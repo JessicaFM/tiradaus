@@ -1,0 +1,6 @@
+.swagger-ui .topbar { background: #0f172a; }
+.swagger-ui .topbar a span { color: #e2e8f0 !important; }
+.swagger-ui .scheme-container { border-radius: 12px; }
+.swagger-ui .opblock { border-radius: 12px; }
+.swagger-ui .btn { border-radius: 10px; }
+.swagger-ui .info .title { display: flex; gap: 10px; align-items: center; }

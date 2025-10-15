@@ -1,3 +1,9 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+
 CREATE TABLE roles (
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) UNIQUE NOT NULL,
@@ -19,9 +25,35 @@ CREATE TABLE users (
   FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT
 );
 
-INSERT INTO roles (id, name, description) VALUES
-(1, 'admin', 'Administrator with full access'),
-(2, 'user', 'Regular user with limited access');
+CREATE INDEX IF NOT EXISTS idx_users_role_id ON users(role_id);
 
-INSERT INTO users (user_name, first_name, last_name, email, password, is_active, role_id) VALUES
-('admin', 'Admin Name', 'Admin Last Name', 'admin@example.com', '$2b$10$9Y8mgvz0/SoltKts.JI0s.6W8QbvrMN/kZiYVbj0frTG3eT/H3Gre', TRUE, 1);
+INSERT INTO roles (id, name, description) VALUES
+(1, 'ADMIN', 'Administrator with full access'),
+(2, 'USER', 'Regular user with limited access')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO users (id, user_name, first_name, last_name, email, password, is_active, role_id) 
+VALUES (
+  1,
+  'admin', 
+  'Admin Name', 
+  'Admin Last Name', 
+  'admin@example.com', 
+  crypt('admin1234', gen_salt('bf', 10)), 
+  TRUE, 
+  1
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO users (id, user_name, first_name, last_name, email, password, is_active, role_id)
+VALUES (
+  2,
+  'test',
+  'Test',
+  'User',
+  'test@example.com',
+  crypt('test1234', gen_salt('bf', 10)),
+  TRUE,
+  2
+)
+ON CONFLICT (id) DO NOTHING;

@@ -1,5 +1,6 @@
 package org.tiradaus.application.usercase;
 
+import org.springframework.stereotype.Service;
 import org.tiradaus.domain.model.Role;
 import org.tiradaus.domain.model.User;
 import org.tiradaus.domain.port.in.RegisterUserUseCase;
@@ -7,6 +8,7 @@ import org.tiradaus.domain.port.out.LoadUserPort;
 import org.tiradaus.domain.port.out.SaveUserPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Service
 public class RegisterUserService implements RegisterUserUseCase {
 
     private final LoadUserPort loadUserPort;

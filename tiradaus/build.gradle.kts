@@ -28,6 +28,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation("org.mapstruct:mapstruct:1.6.2")
     implementation("org.postgresql:postgresql")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.2")
 

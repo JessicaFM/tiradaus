@@ -15,11 +15,28 @@ spring:
   h2:
     console.enable: true
 
-app:
+security:
   jwt:
-    secret: "tiradaus-app"
-    expiration: 3600
-    issuer: "org.tiradaus"
+    secret: "tiradaus-app-prod-secret-super-llarg-milts-bytes"
+    access-minutes: 30
+    refresh-days: 7
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger
+    display-request-duration: true
+    operationsSorter: method
+    tagsSorter: alpha
+    doc-expansion: none
+    deepLinking: true
+    filter: true
+    syntaxHighlight:
+      activated: true
+    tryItOutEnabled: true
+    customCssUrl: /swagger-custom.css
 
 management:
   endpoints.web.exposure.include: health, info
