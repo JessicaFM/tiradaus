@@ -24,9 +24,26 @@ services:
       retries: 5
       start_period: 10s
 
+  api_rest:
+    build:
+      context: ./tiradaus
+      dockerfile: Dockerfile
+    container_name: tiradaus-api
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_URL: jdbc:postgresql://db:5432/tiradaus
+      DB_USER: admin
+      DB_PASSWORD: admin
+    ports: ["8080:8080"]
+    networks: [mynetwork]
+
 volumes:
   postgres_data:
-  
+
 networks:
   mynetwork:
     driver: bridge
