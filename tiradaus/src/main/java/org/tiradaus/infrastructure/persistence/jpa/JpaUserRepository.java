@@ -37,10 +37,10 @@ public class JpaUserRepository implements LoadUserPort, SaveUserPort {
 
     @Override
     public void save(User user) {
+//        UserEntity entity = mapper.toEntity(user);
+//        Long rolId = user.roleId()!= null ? user.roleId() : 2L;
+
         UserEntity entity = mapper.toEntity(user);
-        Role role = user.getRole() != null ? user.getRole() : Role.USER;
-        RoleEntity roleEntity = roleRepo.findByName(role.name())
-                .orElseThrow(() -> new IllegalStateException("Role not exist: " + role.name()));
         userRepo.save(entity);
     }
 

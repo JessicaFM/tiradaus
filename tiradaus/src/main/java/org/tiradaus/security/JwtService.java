@@ -3,7 +3,6 @@ package org.tiradaus.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoder;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,8 +34,8 @@ public class JwtService {
     public String generateAccessToken(User user) {
         Instant now = Instant.now();
         return Jwts.builder()
-                .setSubject(user.getUserName())
-                .claim("role", user.getRole().name())
+                .setSubject(user.userName())
+                .claim("role", user.roleId())
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plus(accessMinutes, ChronoUnit.MINUTES)))
                 .signWith(key)
@@ -46,7 +45,7 @@ public class JwtService {
     public String generateRefreshToken(User user) {
         Instant now = Instant.now();
         return Jwts.builder()
-                .setSubject(user.getUserName())
+                .setSubject(user.userName())
                 .claim("type", "refresh")
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plus(refreshDays, ChronoUnit.DAYS)))

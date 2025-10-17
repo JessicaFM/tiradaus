@@ -37,8 +37,8 @@ public class LoginController {
                 .ok(new LoginResponse(
                         res.accessToken(),
                         res.refreshToken(),
-                        res.user().getRole().name(),
-                        res.user().getUserName())
+                        res.user().roleId(),
+                        res.user().userName())
                 );
     }
 

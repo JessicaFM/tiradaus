@@ -1,8 +1,9 @@
 package org.tiradaus.domain.port.in;
 
+import org.tiradaus.infrastructure.web.dto.RegisterRequest;
+import org.tiradaus.infrastructure.web.dto.RegisterResponse;
+
 public interface RegisterUserUseCase {
 
-    record Command(String username, String email, String rawPassword) {}
-
-    void register(Command command);
+    RegisterResponse register(RegisterRequest reg);
 }

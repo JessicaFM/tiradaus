@@ -38,9 +38,9 @@ public class LoginUserService implements LoginUserUseCase {
                         new BadCredentialsException("Invalid username credentials"));
 
         System.out.println("command: " + command.rawPassword());
-        System.out.println("user: " + user.getPassword());
+        System.out.println("user: " + user.password());
 
-        if (!passwordEncoder.matches(command.rawPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(command.rawPassword(), user.password())) {
             throw new BadCredentialsException("Invalid password credentials");
         }
 

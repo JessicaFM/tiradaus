@@ -7,8 +7,8 @@ public record LoginResponse(
         @io.swagger.v3.oas.annotations.media.Schema(description = "JWT refresh token")
         String refreshToken,
 
-        @io.swagger.v3.oas.annotations.media.Schema(example = "ADMIN")
-        String role,
+        @io.swagger.v3.oas.annotations.media.Schema(example = "2")
+        Long roleId,
 
         @io.swagger.v3.oas.annotations.media.Schema(example = "admin")
         String username

@@ -1,59 +1,79 @@
 package org.tiradaus.application.usercase;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.tiradaus.domain.model.Role;
-import org.tiradaus.domain.model.User;
 import org.tiradaus.domain.port.in.RegisterUserUseCase;
-import org.tiradaus.domain.port.out.LoadUserPort;
 import org.tiradaus.domain.port.out.SaveUserPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.tiradaus.infrastructure.persistence.jpa.entity.RoleEntity;
+import org.tiradaus.infrastructure.persistence.jpa.entity.UserEntity;
+import org.tiradaus.infrastructure.persistence.jpa.mapper.UserJpaMapper;
+import org.tiradaus.infrastructure.persistence.jpa.repository.SpringDataUserRepository;
+import org.tiradaus.infrastructure.web.dto.RegisterRequest;
+import org.tiradaus.infrastructure.web.dto.RegisterResponse;
+
+import java.time.Instant;
 
 @Service
 public class RegisterUserService implements RegisterUserUseCase {
 
-    private final LoadUserPort loadUserPort;
-    private final SaveUserPort saveUserPort;
+    private static final long SELF_REGISTER_ROLE_ID = 2L;
+
+    private final SpringDataUserRepository springDataUserRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public RegisterUserService(LoadUserPort loadUserPort, SaveUserPort saveUserPort, PasswordEncoder passwordEncoder) {
-        this.loadUserPort = loadUserPort;
-        this.saveUserPort = saveUserPort;
+    public RegisterUserService(SpringDataUserRepository springDataUserRepository, PasswordEncoder passwordEncoder){
+        this.springDataUserRepository = springDataUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public void register(Command command) {
-        if(command.email() == null || command.email().isBlank()) {
-            throw  new IllegalArgumentException("Email is required");
+    @Transactional
+    public RegisterResponse register(RegisterRequest req) {
+        String username = req.getUsername();
+        String email = req.getEmail().trim().toLowerCase();
+
+
+        if(springDataUserRepository.existsByUserName(username)) {
+            throw new IllegalArgumentException("Username already exists");
         }
 
-        if(command.username() == null || command.username().isBlank()) {
-            throw new IllegalArgumentException("Username is required");
+        if(springDataUserRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("Email already exists");
         }
 
-        if(command.rawPassword() == null || command.rawPassword().isBlank()) {
-            throw new IllegalArgumentException("Password is required");
+        long roleId = (req.getRoleId() == null) ? SELF_REGISTER_ROLE_ID : req.getRoleId();
+        if(roleId != SELF_REGISTER_ROLE_ID) {
+            throw new IllegalArgumentException("Invalid role");
         }
 
-        loadUserPort.findByUsername(command.username())
-                .ifPresent(u -> { throw new IllegalArgumentException("Username already exists"); });
+        System.out.println(req.getPassword());
+        System.out.println(passwordEncoder.encode(req.getPassword()));
 
-        String hash = passwordEncoder.encode(command.rawPassword());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserName(username);
+        userEntity.setFirstName(req.getFirstName());
+        userEntity.setLastName(req.getLastName());
+        userEntity.setEmail(email);
+        userEntity.setPassword(passwordEncoder.encode(req.getPassword()));
+        userEntity.setIsActive(true);
 
-        User user = new User(
-                null,
-                command.username(),
-                "",
-                "",
-                command.email(),
-                hash,
-                true,
-                Role.USER,
-                null,
-                null,
-                null
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setId(roleId);
+
+        userEntity.setRole(roleEntity);
+
+        userEntity.setCreatedAt(Instant.now());
+        userEntity.setUpdatedAt(Instant.now());
+
+        UserEntity saveUser = springDataUserRepository.save(userEntity);
+
+        return new RegisterResponse(
+                saveUser.getId(),
+                saveUser.getUserName(),
+                saveUser.getEmail(),
+                saveUser.getRole().getId(),
+                saveUser.getIsActive()
         );
-
-        saveUserPort.save(user);
     }
 }
