@@ -2,27 +2,21 @@ version: '3.8'
 
 services:
   db:
-    image: 'postgres:latest'
-    container_name: tiradaus-db
-    restart: always
+    image: postgres:18
     environment:
+      POSTGRES_DB: tiradaus
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: tiradaus
-      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
-    command: ["postgres", "-c", "listen_addresses=*"]
-    ports:
-      - '5432:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql 
       - ./db/init-scripts:/docker-entrypoint-initdb.d
-    networks:
-      - mynetwork
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d tiradaus"]
-      interval: 10s
-      retries: 5
-      start_period: 10s
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB -h 127.0.0.1 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 20s
+    networks: [mynetwork]
 
   api_rest:
     build:
@@ -35,9 +29,9 @@ services:
         condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      DB_URL: jdbc:postgresql://db:5432/tiradaus
-      DB_USER: admin
-      DB_PASSWORD: admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/tiradaus
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
     ports: ["8080:8080"]
     networks: [mynetwork]
 
