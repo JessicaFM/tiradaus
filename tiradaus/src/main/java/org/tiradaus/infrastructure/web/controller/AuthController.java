@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tiradaus.domain.port.in.RegisterUserUseCase;
 import org.tiradaus.infrastructure.web.dto.RegisterRequest;
 import org.tiradaus.infrastructure.web.dto.RegisterResponse;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -48,42 +49,6 @@ public class AuthController {
             Creates a new user account. Depending on configuration, the account may require \
             email verification before the first login. The password must comply with the security policy.
             """
-    )
-    @RequestBody(
-            required = true,
-            description = "Registration payload",
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = RegisterRequest.class),
-                    examples = {
-                            @ExampleObject(
-                                    name = "Minimal request",
-                                    value = """
-                        {
-                          "username": "jdoe",
-                          "email": "jdoe@example.com",
-                          "password": "P@ssw0rd!",
-                          "firstName": "John",
-                          "lastName": "Doe",
-                          "roleId": 2
-                        }
-                        """
-                            ),
-                            @ExampleObject(
-                                    name = "Invalid email",
-                                    value = """
-                        {
-                          "username": "jdoe",
-                          "email": "not-an-email",
-                          "password": "short",
-                          "firstName": "John",
-                          "lastName": "Doe",
-                          "roleId": 2
-                        }
-                        """
-                            )
-                    }
-            )
     )
     @ApiResponses({
             @ApiResponse(

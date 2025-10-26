@@ -25,6 +25,7 @@ public class LoginUserService implements LoginUserUseCase {
 
     @Override
     public Result login(Command command) {
+        System.out.println(command);
         if (command.username() == null || command.username().isBlank()) {
             throw new IllegalArgumentException("Username is required");
         }
@@ -36,9 +37,6 @@ public class LoginUserService implements LoginUserUseCase {
         User user = loadUserPort.findByUsername(command.username())
                 .orElseThrow(() ->
                         new BadCredentialsException("Invalid username credentials"));
-
-        System.out.println("command: " + command.rawPassword());
-        System.out.println("user: " + user.password());
 
         if (!passwordEncoder.matches(command.rawPassword(), user.password())) {
             throw new BadCredentialsException("Invalid password credentials");

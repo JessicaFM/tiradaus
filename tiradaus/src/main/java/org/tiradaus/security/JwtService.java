@@ -12,6 +12,8 @@ import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 
 @Service
@@ -20,6 +22,7 @@ public class JwtService {
     private final SecretKey key;
     private final long accessMinutes;
     private final long refreshDays;
+    private final Set<String> blacklistedTokens = new HashSet<>();
 
     public JwtService(
             @Value("${security.jwt.secret}") String secret,
@@ -81,5 +84,13 @@ public class JwtService {
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token);
+    }
+
+    public void blacklistToken(String token) {
+        blacklistedTokens.add(token);
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.contains(token);
     }
 }

@@ -6,22 +6,26 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tiradaus.domain.port.in.LoginUserUseCase;
+import org.tiradaus.domain.port.in.LogoutUserUseCase;
 import org.tiradaus.infrastructure.web.dto.LoginResponse;
+import org.tiradaus.infrastructure.web.dto.LogoutResponse;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 @Tag(
-        name = "Login",
+        name = "Login & Logout",
         description = "User authentication and JWT token issuance",
         externalDocs = @ExternalDocumentation(
                 description = "Authentication flow details",
@@ -42,9 +46,14 @@ public class LoginController {
 
     public record TokenResponse(String accessToke, String refreshToken) {}
     private final LoginUserUseCase loginUserUseCase;
+    private final LogoutUserUseCase logoutUserUseCase;
 
-    public LoginController(LoginUserUseCase loginUserUseCase) {
+    public LoginController(
+            LoginUserUseCase loginUserUseCase,
+            LogoutUserUseCase logoutUserUseCase
+    ) {
         this.loginUserUseCase = loginUserUseCase;
+        this.logoutUserUseCase = logoutUserUseCase;
     }
 
     @PostMapping(
@@ -58,34 +67,6 @@ public class LoginController {
             Validates user credentials and returns a JWT access token plus a refresh token.
             Use the access token in the Authorization header as: Bearer &lt;token&gt;.
             """
-    )
-    @RequestBody(
-            required = true,
-            description = "Credentials payload",
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = LoginRequest.class),
-                    examples = {
-                            @ExampleObject(
-                                    name = "Valid request",
-                                    value = """
-                        {
-                          "username": "jdoe",
-                          "password": "P@ssw0rd!"
-                        }
-                        """
-                            ),
-                            @ExampleObject(
-                                    name = "Empty fields",
-                                    value = """
-                        {
-                          "username": "",
-                          "password": ""
-                        }
-                        """
-                            )
-                    }
-            )
     )
     @ApiResponses({
             @ApiResponse(
@@ -166,6 +147,8 @@ public class LoginController {
             )
     })
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest req) {
+        System.out.println("username=" + req.username() + ", pw_len=" + (req.password()==null?null:req.password().length()));
+
         var res = loginUserUseCase.login(
                 new LoginUserUseCase.Command(
                         req.username(),
@@ -180,6 +163,32 @@ public class LoginController {
                         res.user().roleId(),
                         res.user().userName())
                 );
+    }
+
+    @PostMapping(
+            path = "/logout",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Operation(
+            summary = "Logout (invalidate current JWT)",
+            description = """
+        Invalidates the provided Bearer token.
+        Send the Authorization header as: Bearer <token>.
+        """
+    )
+    public ResponseEntity<LogoutResponse> logout(
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            // devuelve 401 en vez de tirar IllegalArgumentException
+            return ResponseEntity
+                    .status(401)
+                    .body(new LogoutResponse("Missing or invalid Authorization header (Bearer token required)"));
+        }
+
+        String token = authHeader.substring(7);
+        var result = logoutUserUseCase.logout(new LogoutUserUseCase.Command(token));
+        return ResponseEntity.ok(new LogoutResponse(result.message()));
     }
 
 }
