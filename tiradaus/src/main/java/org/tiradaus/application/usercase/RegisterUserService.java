@@ -47,9 +47,6 @@ public class RegisterUserService implements RegisterUserUseCase {
             throw new IllegalArgumentException("Invalid role");
         }
 
-        System.out.println(req.getPassword());
-        System.out.println(passwordEncoder.encode(req.getPassword()));
-
         UserEntity userEntity = new UserEntity();
         userEntity.setUserName(username);
         userEntity.setFirstName(req.getFirstName());
