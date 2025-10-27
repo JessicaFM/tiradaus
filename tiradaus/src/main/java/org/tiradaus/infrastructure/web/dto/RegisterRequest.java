@@ -21,6 +21,8 @@ public class RegisterRequest {
     @jakarta.validation.constraints.Size(max = 100)
     String lastName;
 
+    @com.fasterxml.jackson.annotation.JsonProperty("role")
+    @io.swagger.v3.oas.annotations.media.Schema(example = "2")
     Long roleId;
 
     public String getUsername() { return  username; }

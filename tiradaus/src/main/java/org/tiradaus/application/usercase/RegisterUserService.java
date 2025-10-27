@@ -33,6 +33,11 @@ public class RegisterUserService implements RegisterUserUseCase {
         String username = req.getUsername();
         String email = req.getEmail().trim().toLowerCase();
 
+        System.out.println(req.getPassword());
+        System.out.println(req.getEmail());
+        System.out.println(req.getFirstName());
+        System.out.println(req.getUsername());
+
 
         if(springDataUserRepository.existsByUserName(username)) {
             throw new IllegalArgumentException("Username already exists");
@@ -43,6 +48,9 @@ public class RegisterUserService implements RegisterUserUseCase {
         }
 
         long roleId = (req.getRoleId() == null) ? SELF_REGISTER_ROLE_ID : req.getRoleId();
+        System.out.println("roleId: " + roleId);
+        System.out.println("SELF_REGISTER_ROLE_ID: " + SELF_REGISTER_ROLE_ID);
+
         if(roleId != SELF_REGISTER_ROLE_ID) {
             throw new IllegalArgumentException("Invalid role");
         }

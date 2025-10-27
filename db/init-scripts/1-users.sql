@@ -32,28 +32,18 @@ INSERT INTO roles (id, name, description) VALUES
 (2, 'USER', 'Regular user with limited access')
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO users (id, user_name, first_name, last_name, email, password, is_active, role_id) 
-VALUES (
-  1,
-  'admin', 
-  'Admin Name', 
-  'Admin Last Name', 
-  'admin@example.com', 
-  crypt('admin1234', gen_salt('bf', 10)), 
-  TRUE, 
-  1
-)
-ON CONFLICT (id) DO NOTHING;
+INSERT INTO users (user_name, first_name, last_name, email, password, is_active, role_id)
+SELECT 'admin', 'Admin Name', 'Admin Last Name', 'admin@example.com',
+       crypt('admin1234', gen_salt('bf', 10)), TRUE, 1
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'admin@example.com');
 
-INSERT INTO users (id, user_name, first_name, last_name, email, password, is_active, role_id)
-VALUES (
-  2,
-  'test',
-  'Test',
-  'User',
-  'test@example.com',
-  crypt('test1234', gen_salt('bf', 10)),
-  TRUE,
-  2
-)
-ON CONFLICT (id) DO NOTHING;
+INSERT INTO users (user_name, first_name, last_name, email, password, is_active, role_id)
+SELECT 'test', 'Test', 'User', 'test@example.com',
+       crypt('test1234', gen_salt('bf', 10)), TRUE, 2
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'test@example.com');
+
+SELECT setval(
+  pg_get_serial_sequence('users','id'),
+  COALESCE((SELECT MAX(id) FROM users), 0),
+  true
+);
