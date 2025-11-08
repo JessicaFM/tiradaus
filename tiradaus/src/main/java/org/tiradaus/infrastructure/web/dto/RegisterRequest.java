@@ -1,5 +1,11 @@
 package org.tiradaus.infrastructure.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Past;
+
+import java.time.LocalDate;
+
 public class RegisterRequest {
     @jakarta.validation.constraints.NotBlank
     @io.swagger.v3.oas.annotations.media.Schema(example = "user")
@@ -25,6 +31,16 @@ public class RegisterRequest {
     @io.swagger.v3.oas.annotations.media.Schema(example = "2")
     Long roleId;
 
+    @Past
+    @Schema(
+            type = "string",
+            format = "date",
+            example = "2010-05-21",
+            description = "Date of Birth (YYYY-MM-DD)"
+    )
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    LocalDate birthDate;
+
     public String getUsername() { return  username; }
 
     public String getEmail() { return email; }
@@ -36,4 +52,6 @@ public class RegisterRequest {
     public String getLastName() { return lastName; }
 
     public Long getRoleId() { return roleId; }
+
+    public LocalDate getBirthDate() { return birthDate; }
 }

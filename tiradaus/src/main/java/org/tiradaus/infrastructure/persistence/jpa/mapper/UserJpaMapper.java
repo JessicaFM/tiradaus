@@ -16,5 +16,6 @@ public interface UserJpaMapper {
     @Mapping(target = "roleId", source = "role.id")
     @Mapping(target = "active", source = "isActive")
     @Mapping(target = "userName", source = "userName")
+    @Mapping(target = "birthDate", source = "birthDate")
     User toDomain(UserEntity entity);
 }

@@ -19,6 +19,7 @@ CREATE TABLE users (
   password TEXT NOT NULL,
   is_active BOOLEAN DEFAULT TRUE,
   role_id INT NOT NULL DEFAULT 2,
+  birth_date DATE,
   last_login TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -37,10 +38,15 @@ SELECT 'admin', 'Admin Name', 'Admin Last Name', 'admin@example.com',
        crypt('admin1234', gen_salt('bf', 10)), TRUE, 1
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'admin@example.com');
 
-INSERT INTO users (user_name, first_name, last_name, email, password, is_active, role_id)
-SELECT 'test', 'Test', 'User', 'test@example.com',
-       crypt('test1234', gen_salt('bf', 10)), TRUE, 2
-WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'test@example.com');
+INSERT INTO users (user_name, first_name, last_name, email, password, is_active, role_id, birth_date)
+SELECT 'user1', 'User1 FirstName', 'User1 LastName', 'user1@example.com',
+       crypt('user11234', gen_salt('bf', 10)), TRUE, 2, '1990-05-21'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'user1@example.com');
+
+INSERT INTO users (user_name, first_name, last_name, email, password, is_active, role_id, birth_date)
+SELECT 'user2', 'User2 FirstName', 'User2 LastName', 'user2@example.com',
+       crypt('user21234', gen_salt('bf', 10)), TRUE, 2, '2010-05-21'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'user2@example.com');
 
 SELECT setval(
   pg_get_serial_sequence('users','id'),

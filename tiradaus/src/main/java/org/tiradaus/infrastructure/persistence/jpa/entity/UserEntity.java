@@ -3,6 +3,7 @@ package org.tiradaus.infrastructure.persistence.jpa.entity;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
@@ -34,6 +35,9 @@ public class UserEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity role;
+
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
     @Column(name = "last_login")
     private Instant lastLogin;
@@ -78,9 +82,11 @@ public class UserEntity {
     public RoleEntity getRole() { return role; }
     public void setRole(RoleEntity role) { this.role = role; }
 
+    public LocalDate getBirthDate() { return birthDate; }
+    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+
     public Instant getLastLogin() { return lastLogin; }
     public void setLastLogin(Instant lastLogin) { this.lastLogin = lastLogin; }
-
 
     public Instant getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }

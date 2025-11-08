@@ -3,11 +3,9 @@ package org.tiradaus.application.usercase;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.tiradaus.domain.port.in.RegisterUserUseCase;
-import org.tiradaus.domain.port.out.SaveUserPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.tiradaus.infrastructure.persistence.jpa.entity.RoleEntity;
 import org.tiradaus.infrastructure.persistence.jpa.entity.UserEntity;
-import org.tiradaus.infrastructure.persistence.jpa.mapper.UserJpaMapper;
 import org.tiradaus.infrastructure.persistence.jpa.repository.SpringDataUserRepository;
 import org.tiradaus.infrastructure.web.dto.RegisterRequest;
 import org.tiradaus.infrastructure.web.dto.RegisterResponse;
@@ -68,6 +66,8 @@ public class RegisterUserService implements RegisterUserUseCase {
 
         userEntity.setRole(roleEntity);
 
+        userEntity.setBirthDate(req.getBirthDate());
+
         userEntity.setCreatedAt(Instant.now());
         userEntity.setUpdatedAt(Instant.now());
 
@@ -78,7 +78,8 @@ public class RegisterUserService implements RegisterUserUseCase {
                 saveUser.getUserName(),
                 saveUser.getEmail(),
                 saveUser.getRole().getId(),
-                saveUser.getIsActive()
+                saveUser.getIsActive(),
+                saveUser.getBirthDate()
         );
     }
 }
