@@ -53,3 +53,5 @@ SELECT setval(
   COALESCE((SELECT MAX(id) FROM users), 0),
   true
 );
+
+

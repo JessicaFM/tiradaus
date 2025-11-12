@@ -31,12 +31,6 @@ public class RegisterUserService implements RegisterUserUseCase {
         String username = req.getUsername();
         String email = req.getEmail().trim().toLowerCase();
 
-        System.out.println(req.getPassword());
-        System.out.println(req.getEmail());
-        System.out.println(req.getFirstName());
-        System.out.println(req.getUsername());
-
-
         if(springDataUserRepository.existsByUserName(username)) {
             throw new IllegalArgumentException("Username already exists");
         }

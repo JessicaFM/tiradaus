@@ -40,3 +40,9 @@ springdoc:
 
 management:
   endpoints.web.exposure.include: health, info
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
