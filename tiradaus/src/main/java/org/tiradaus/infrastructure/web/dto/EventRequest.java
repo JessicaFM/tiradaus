@@ -11,9 +11,9 @@ import java.sql.Timestamp;
 
 public class EventRequest {
     private String name;
-    private String description,
-    private Timestamp startDate,
-    private Timestamp endDate,
+    private String description;
+    private Timestamp startDate;
+    private Timestamp endDate;
     private EventMode eventMode;
     private Long gameId;
     private String location;
