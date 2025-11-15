@@ -30,8 +30,8 @@ public class GameRequest {
     @JsonProperty("gameType")
     @Schema(
             description = "Type pf game",
-            example = "online",
-            allowableValues = {"online", "physical"}
+            example = "ONLINE",
+            allowableValues = {"ONLINE", "PHYSICAL"}
     )
     public GameType getGameType() {
         return gameType;

@@ -29,10 +29,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GameService implements GameUseCase {
 
-    private final SpringDataGameRepository repo; // Entity-level (paginado)
-    private final GameJpaMapper jpaMapper;       // Entity <-> Domain
-    private final GameDtoMapper dtoMapper;       // Domain <-> DTO
-    private final GameQueryPort gameQueryPort;   // Domain-level (no paginado)
+    private final SpringDataGameRepository repo;
+    private final GameJpaMapper jpaMapper;
+    private final GameDtoMapper dtoMapper;
+    private final GameQueryPort gameQueryPort;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')") // requiere autoridad ROLE_ADMIN
