@@ -11,7 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.tiradaus.domain.model.Game;
 import org.tiradaus.domain.model.GameType;
 import org.tiradaus.domain.port.in.GameUseCase;
-import org.tiradaus.domain.port.out.GameQueryPort;
 import org.tiradaus.infrastructure.persistence.jpa.entity.GameEntity;
 import org.tiradaus.infrastructure.persistence.jpa.mapper.GameJpaMapper;
 import org.tiradaus.infrastructure.persistence.jpa.repository.SpringDataGameRepository;
@@ -32,10 +31,9 @@ public class GameService implements GameUseCase {
     private final SpringDataGameRepository repo;
     private final GameJpaMapper jpaMapper;
     private final GameDtoMapper dtoMapper;
-    private final GameQueryPort gameQueryPort;
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')") // requiere autoridad ROLE_ADMIN
+    @PreAuthorize("hasRole('ADMIN')")
     @Transactional
     public GameResponse create(GameRequest req) {
         Game domain = dtoMapper.toDomain(req);

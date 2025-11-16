@@ -17,5 +17,7 @@ public interface UserJpaMapper {
     @Mapping(target = "active", source = "isActive")
     @Mapping(target = "userName", source = "userName")
     @Mapping(target = "birthDate", source = "birthDate")
+    @Mapping(target = "withPassword", ignore = true)
+    @Mapping(target = "withId", ignore = true)
     User toDomain(UserEntity entity);
 }

@@ -13,7 +13,7 @@ CREATE TABLE events (
   FOREIGN KEY (game_id) REFERENCES games ON DELETE RESTRICT
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Torneig classificatori de League of Legends',
   'Torneig 5v5 en línia amb fase de grups i eliminatòries. Obert a equips amateurs.',
@@ -25,7 +25,7 @@ VALUES (
   40
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Marató de The Legend of Zelda: Breath of the Wild',
   'Sessió presencial per compartir partides, trucs i exploració del món obert.',
@@ -37,7 +37,7 @@ VALUES (
   12
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Lliga local de FIFA 25',
   'Competició presencial setmanal amb classificació, inspirada en les lligues professionals.',
@@ -49,7 +49,7 @@ VALUES (
   24
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Torneig ràpid de Valorant 5v5',
   'Bracket d’eliminació directa amb partides al millor de 3. Ideal per equips competitius novells.',
@@ -61,7 +61,7 @@ VALUES (
   32
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Nit creativa de Minecraft',
   'Esdeveniment cooperatiu en línia per construir una ciutat conjunta en un servidor privat.',
@@ -73,7 +73,7 @@ VALUES (
   20
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Sessió de God of War: Ragnarök per a adults',
   'Trobada presencial per comentar la història, bosses i estratègies en les dificultats més altes.',
@@ -85,7 +85,7 @@ VALUES (
   10
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Battle Royale Night de Fortnite',
   'Vetllada en línia amb partides personalitzades i minijocs creatius amb amics.',
@@ -97,7 +97,7 @@ VALUES (
   50
 );
 
-INSERT INTO events (name, description, start_at, end_at, event_mode, game_id, location, players)
+INSERT INTO events (name, description, start_date, end_date, event_mode, game_id, location, players)
 VALUES (
   'Campionat de Mario Kart 8 Deluxe',
   'Torneig presencial amb premis per als tres primers classificats i curses especials mirall.',

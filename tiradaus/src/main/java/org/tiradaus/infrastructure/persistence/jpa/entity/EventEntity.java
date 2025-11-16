@@ -1,6 +1,7 @@
 package org.tiradaus.infrastructure.persistence.jpa.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.tiradaus.domain.model.EventMode;
@@ -10,6 +11,11 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "events")
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString
 public class EventEntity {
 
     @Id
@@ -36,7 +42,7 @@ public class EventEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "game_id", nullable = false)
-    private Game gameId;
+    private GameEntity game;
 
     @Column(name = "location")
     private String location;
