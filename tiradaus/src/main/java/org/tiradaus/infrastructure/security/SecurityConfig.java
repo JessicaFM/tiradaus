@@ -80,6 +80,7 @@ public class SecurityConfig {
                                         "/v3/api-docs/**")
                                 .permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/games/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(AbstractHttpConfigurer::disable)
@@ -87,11 +88,22 @@ public class SecurityConfig {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 )
-                .exceptionHandling(ex -> ex.authenticationEntryPoint((req, res, e) -> {
-                    res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    res.setContentType("application/json;charset=UTF-8");
-                    res.getWriter().write("{\"error\":\"Unauthorized\",\"message\":\"" + e.getMessage() + "\"}");
-                }));
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((req, res, e) -> {
+                            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            res.setContentType("application/json;charset=UTF-8");
+                            res.getWriter().write("""
+                        {"error":"No autoritzat","message":"Cal estar autenticat per accedir a aquest recurs"}
+                        """);
+                                    })
+                        .accessDeniedHandler((req, res, e) -> {
+                                        res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                                        res.setContentType("application/json;charset=UTF-8");
+                                        res.getWriter().write("""
+                        {"error":"Accés denegat","message":"No tens els permisos necessaris per accedir a aquest recurs"}
+                        """);
+                        })
+                );
 
         return http.build();
     }
