@@ -7,18 +7,20 @@ CREATE TABLE games (
   game_type game_type NOT NULL DEFAULT 'ONLINE',
   platform TEXT,
   min_age SMALLINT,
+  image_url TEXT,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Exemples de jocs "online" i "physical"
-INSERT INTO games (title, description, game_type, platform, min_age, created_at, updated_at)
+INSERT INTO games (title, description, game_type, platform, min_age, image_url, created_at, updated_at)
 VALUES
 ('League of Legends',
  'Joc multijugador en línia de tipus MOBA desenvolupat per Riot Games.',
  'ONLINE',
  'PC',
  13,
+ 'https://cdn2.unrealengine.com/lol-logo-rendered-350x100-350x100-a2f0d5492480.png?resize=1&w=480&h=270&quality=medium',
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP),
 
@@ -27,6 +29,7 @@ VALUES
  'PHYSICAL',
  'Nintendo Switch',
  12,
+ 'null',
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP),
 
@@ -35,6 +38,7 @@ VALUES
  'PHYSICAL',
  'PlayStation 5',
  3,
+ null,
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP),
 
@@ -43,6 +47,7 @@ VALUES
  'ONLINE',
  'PC',
  16,
+ null,
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP),
 
@@ -51,6 +56,7 @@ VALUES
  'ONLINE',
  'PC / Consoles / Mòbil',
  7,
+ null,
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP),
 
@@ -59,6 +65,7 @@ VALUES
  'PHYSICAL',
  'PlayStation 5',
  18,
+ null,
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP),
 
@@ -67,14 +74,15 @@ VALUES
  'ONLINE',
  'PC / Consoles / Mòbil',
  12,
+ null,
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP),
 
 ('Mario Kart 8 Deluxe',
- 'Joc de curses arcade amb personatges de l’univers Mario.',
+ 'Joc de curses arcade amb personatges de l´univers Mario.',
  'PHYSICAL',
  'Nintendo Switch',
  3,
+ null,
  CURRENT_TIMESTAMP,
  CURRENT_TIMESTAMP);
-

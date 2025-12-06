@@ -37,6 +37,9 @@ public class GameEntity {
     @Column(name = "min_age")
     private Integer minAge;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "created_at")
     private Instant createdAt;
 

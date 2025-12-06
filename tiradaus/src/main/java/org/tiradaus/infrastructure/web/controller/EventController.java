@@ -12,10 +12,8 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.tiradaus.domain.model.EventMode;
-import org.tiradaus.domain.model.GameType;
 import org.tiradaus.domain.port.in.EventUseCase;
 import org.tiradaus.infrastructure.web.dto.*;
 

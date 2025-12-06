@@ -8,5 +8,6 @@ public record GameResponse(
     String description,
     GameType gameType,
     String platform,
-    Integer minAge
+    Integer minAge,
+    String imageUrl
 ) { }

@@ -9,6 +9,7 @@ public record Game(
     GameType gameType,
     String platform,
     Integer minAge,
+    String imageUrl,
     Instant createdAt,
     Instant updatedAt
     ) {

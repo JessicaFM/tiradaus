@@ -13,6 +13,7 @@ public class GameRequest {
     private GameType gameType;
     private String platform;
     private Integer minAge;
+    private String imageUrl;
 
     @jakarta.validation.constraints.NotBlank
     @Size(max = 200)
@@ -24,6 +25,11 @@ public class GameRequest {
     @io.swagger.v3.oas.annotations.media.Schema(example = "Long description of the video game")
     public String getDescription() {
         return description;
+    }
+
+    @io.swagger.v3.oas.annotations.media.Schema(example = "URL image of the game")
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     @NotNull
