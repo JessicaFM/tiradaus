@@ -39,8 +39,11 @@ http://localhost:8080
 
 
 ### 🔑 Demo Credentials
-Username	Password	Role
-admin	admin1234	ADMIN
+		
+| Username  |  Password | Role  |
+|-----------|-----------|-------|
+|admin      | admin1234 | ADMIN |
+
 
 You can also self-register additional accounts via the /api/auth/register endpoint.
 
