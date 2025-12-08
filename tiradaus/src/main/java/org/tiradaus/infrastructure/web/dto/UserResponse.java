@@ -40,9 +40,12 @@ public class UserResponse {
     public boolean isActive() { return isActive; }
     public boolean getIsActive() { return isActive; }
 
+    /*
     public String getEventName() { return eventName; }
     public void setEventName(String eventName) { this.eventName = eventName; }
 
     public String getGameTitle() { return gameTitle; }
     public void setGameTitle(String gameTitle) { this.gameTitle = gameTitle; }
+
+     */
 }
