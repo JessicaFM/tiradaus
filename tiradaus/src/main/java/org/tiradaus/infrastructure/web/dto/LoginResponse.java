@@ -10,6 +10,9 @@ public record LoginResponse(
         @io.swagger.v3.oas.annotations.media.Schema(example = "2")
         Long roleId,
 
+        @io.swagger.v3.oas.annotations.media.Schema(example = "2")
+        Long userId,
+
         @io.swagger.v3.oas.annotations.media.Schema(example = "admin")
         String username
 ) {}

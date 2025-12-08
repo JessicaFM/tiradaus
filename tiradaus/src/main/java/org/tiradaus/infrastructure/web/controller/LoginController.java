@@ -161,6 +161,7 @@ public class LoginController {
                         res.accessToken(),
                         res.refreshToken(),
                         res.user().roleId(),
+                        res.user().id(),
                         res.user().userName())
                 );
     }

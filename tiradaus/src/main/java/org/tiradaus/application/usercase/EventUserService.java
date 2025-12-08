@@ -79,8 +79,12 @@ public class EventUserService implements EventUserUseCase {
         return new EventUserResponse(
                 event.getId(),
                 event.getName(),
+                event.getDescription(),
                 event.getStartDate(),
                 event.getEndDate(),
+                event.getEventMode(),
+                event.getLocation(),
+                event.getPlayers(),
                 gameId,
                 gameTitle,
                 gameImageUrl,
