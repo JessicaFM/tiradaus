@@ -40,8 +40,11 @@ public class EventEntity {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private EventMode eventMode;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "game_id", nullable = false)
+    @Column(name = "game_id")
+    private Long gameId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "game_id", insertable = false, updatable = false)
     private GameEntity game;
 
     @Column(name = "location")

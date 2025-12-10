@@ -53,7 +53,7 @@ public class EventRequest {
         return eventMode;
     }
 
-    @com.fasterxml.jackson.annotation.JsonProperty("game")
+    @com.fasterxml.jackson.annotation.JsonProperty("gameId")
     @io.swagger.v3.oas.annotations.media.Schema(example = "1")
     public Long getGameId() {
         return gameId;
